@@ -4,9 +4,7 @@ provider "aws" {
 
 terraform {
   required_providers {
-    aws = {
-        source = "hashicorp/aws"
-        version = "~> 4.19.0"
+
     }
     kubectl = {
       source = "gavinbunney/kubectl"
@@ -17,4 +15,4 @@ terraform {
       version = "2.12.1"
     }
   }
-}
+

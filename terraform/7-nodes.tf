@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 
 // Create private nodes
 resource "aws_eks_node_group" "private-nodes" {
-    cluster_name = aws_eks_cluster.smp.name
+    cluster_name = aws_eks_cluster.devlink.name
     node_group_name = "private-nodes"
     node_role_arn = aws_iam_role.nodes.arn
 
@@ -65,7 +65,7 @@ resource "aws_eks_node_group" "private-nodes" {
 //Create public nodes
 
 resource "aws_eks_node_group" "public-nodes" {
-    cluster_name   = aws_eks_cluster.smp.name
+    cluster_name   = aws_eks_cluster.devlink.name
     node_group_name = "public-nodes"
     node_role_arn = aws_iam_role.nodes.arn
 

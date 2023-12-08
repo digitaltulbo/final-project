@@ -111,7 +111,6 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
 spec:
   rules:
-  - host: smp-wordpress.duckdns.org
     http:
       paths:
       - path: /

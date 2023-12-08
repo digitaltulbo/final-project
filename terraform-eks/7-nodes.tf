@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role = aws_iam_role.nodes.name
 }
-
+## for ECR 
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.nodes.name
@@ -38,7 +38,7 @@ resource "aws_eks_node_group" "private-nodes" {
         aws_subnet.private_subnet_a.id,
         aws_subnet.private_subnet_c.id
     ]
-
+## 일단은 on_demand로, 향후 모니터링에서 문제가 없다면 스케일링예정
     capacity_type = "ON_DEMAND"
     instance_types = ["t3.small"]
 
@@ -62,38 +62,5 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 }
 
-//Create public nodes
 
-resource "aws_eks_node_group" "public-nodes" {
-    cluster_name   = aws_eks_cluster.devlink.name
-    node_group_name = "public-nodes"
-    node_role_arn = aws_iam_role.nodes.arn
-
-    subnet_ids = [
-        aws_subnet.public_subnet_a.id,
-        aws_subnet.public_subnet_c.id
-    ]
-
-    capacity_type = "ON_DEMAND"
-    instance_types = ["t3.small"]
-
-    scaling_config {
-        desired_size = 2
-        max_size = 5
-        min_size = 0
-    }
-
-    update_config {
-        max_unavailable = 1
-    }
-    labels = {
-      role = "public"
-    }
-
-    depends_on = [
-        aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
-        aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
-        aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
-    ]
-}
 

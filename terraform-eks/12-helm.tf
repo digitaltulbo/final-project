@@ -45,21 +45,12 @@ resource "helm_release" "aws-load-balancer-controller" {
 }
 //Metrics Server
 resource "helm_release" "metrics_server" {
-  name       = "metrics-server"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "metrics-server"
-  namespace  = "kube-system"
-
-  set {
-    name  = "apiService.create"
-    value = "true"
-  }
-
-  set {
-    name  = "rbac.create"
-    value = "true"
-  }
-
+  namespace        = "kube-system"
+  name             = "metrics-server"
+  chart            = "metrics-server"
+  version          = "3.8.2"
+  repository       = "https://kubernetes-sigs.github.io/metrics-server/"
+  create_namespace = true
   set {
     name  = "replicas"
     value = "1"
@@ -93,10 +84,11 @@ resource "null_resource" "password" {
   }
 }
 
-resource "null_resource" "del-argo-pass" {
-  depends_on = [null_resource.password]
-  provisioner "local-exec" {
-    command = "kubectl -n argocd delete secret argocd-initial-admin-secret"
-  }
-}
+## delete argo-cd password
+##resource "null_resource" "del-argo-pass" {
+##  depends_on = [null_resource.password]
+##  provisioner "local-exec" {
+##    command = "kubectl -n argocd delete secret argocd-initial-admin-secret"
+##  }
+##}
 

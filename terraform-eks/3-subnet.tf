@@ -5,7 +5,7 @@ resource "aws_subnet" "public_subnet_a" {
   availability_zone       = "ap-northeast-2a"
   map_public_ip_on_launch = true
   tags = {
-    "Name" = "public-web-a"
+    "Name" = "public_subnet_a"
     "kubernetes.io/role/elb" = "1"
     "kubernetes.io/cluster/devlink" = "owned"
   }
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet_c" {
   availability_zone       = "ap-northeast-2c"
   map_public_ip_on_launch = true
   tags = {
-    "Name" = "public-web-c"
+    "Name" = "public_subnet_c"
     "kubernetes.io/role/elb" = "1"
     "kubernetes.io/cluster/devlink" = "owned"
   }
@@ -29,7 +29,7 @@ resource "aws_subnet" "private_subnet_a" {
   cidr_block = "10.0.3.0/24"
   availability_zone = "ap-northeast-2a"
   tags = {
-    Name = "private-app-a"
+    Name = "private_subnet_a"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/devlink" = "owned"
   }
@@ -40,7 +40,7 @@ resource "aws_subnet" "private_subnet_c" {
   cidr_block = "10.0.4.0/24"
   availability_zone = "ap-northeast-2c"
   tags = {
-    "Name" = "private-app-c"
+    "Name" = "private_subnet_c"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/devlink" = "owned"
   }
